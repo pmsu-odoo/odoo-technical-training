@@ -117,13 +117,10 @@ class property(models.Model):
                 raise UserError("A state whic is not in New or Canceled state can't be deleted")
 
     def return_wizard(self):
-        print("--------------------", self._context)
-        for record in self:
-            return {
+        return {
                 'type':'ir.actions.act_window',
                 'res_model':'offer.wizard',
                 'name':'Add Offer',
                 'view_mode':'form',
-                'target':'new',
-                'context':{'context_id':(record)}
+                'target':'new'
         }

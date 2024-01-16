@@ -85,10 +85,11 @@
 
             <field name="offer_ids" eval="[
             Command.create({
-                'price': 210000,
+                'price': 2100000,
                 'partner_id':ref('base.res_partner_12'),
                 'property_id':'estate_property_3',
                             })
+                            
                             ]" 
             />
         </record>

@@ -2,10 +2,12 @@
  
     'name' : 'Real Estate',
     'description':'Dummy real estate model',
+    'category': 'Real Estate/Brokerage',
     'depends':['base'],
     
     'data':[
         'security/ir.model.access.csv',
+        'security/security.xml',
         'views/property_offer.xml',
         'wizard/offer_wizard_view.xml',
         'views/property.xml',
