@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="property_offers_template">
+        <t t-name="estate.mani_template">
+        <t t-foreach="docs" t-as="property">
+
+            <t t-call="web.html_container"> 
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>
+                            <span t-field="property.title" />
+                        </h2>
+                        <div>
+                            <strong>Sales man: </strong>
+                            <span t-field="property.salesman" />
+                        </div>
+                        <div class="tbl" t-if="property.offer_ids">
+                            <t t-call="estate.property_offers_sub_template"/>
+                        </div>
+
+                        <div t-else=""> 
+                            <strong>No offers for this property</strong> 
+                        </div>        
+                    </div>
+                </t>
+            </t>
+        </t>
+        </t>
+    </template>
+
+
+    <!-- Sub template for offer table -->
+    <template id="property_offers_sub_template">
+        <div>
+            <strong>Expected Price: </strong>
+            <span t-field="property.expected_price" />
+        </div>
+
+        <div>
+            <strong>Status: </strong>
+            <span t-field="property.state" />
+        </div>
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Price</th>
+                    <th>Partner</th>
+                    <th>valididty</th>
+                    <th>Date od Deadline</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-set="offers" t-value="property.mapped('offer_ids')" />
+                <tr t-foreach="offers" t-as="offer">
+                    <td>
+                        <span t-field="offer.price" />
+                    </td>
+                    <td>
+                        <span t-field="offer.partner_id" />
+                    </td>
+                    <td>
+                        <span t-field="offer.validity" />
+                    </td>
+                    <td>
+                        <span t-field="offer.date_deadline" />
+                    </td>
+                    <td>
+                        <span t-field="offer.status" />
+                    </td>
+                </tr>
+            </tbody>
+            </table>        
+    </template>
+
+    <!-- Users property template-->
+    <template id="users_property_template">
+
+        <t t-foreach="docs" t-as="user">
+            
+            <t t-call="web.html_container"> 
+                <t t-call="web.external_layout">
+                    
+                    <div class="page">
+                        <h3>
+                            <strong>Salesman:</strong>
+                            <span t-field="user.name"/>
+                        </h3>
+
+                        <t t-set="properties" t-value="user.mapped('property_ids')" />
+                        <t t-foreach="properties" t-as="property">
+                            <h3>
+                                <span t-field="property.name"/>
+                            </h3>
+                            <t t-call="estate.property_offers_sub_template"/>
+                        </t>
+
+                    </div>
+                </t>
+            </t>
+        </t>        
+    </template>
+
+</odoo>

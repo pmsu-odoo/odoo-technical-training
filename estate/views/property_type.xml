@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+<odoo>
+
+    <!-- Tree-->
+    <record id="property_type_tree" model="ir.ui.view">
+        <field name="name">property.type</field>
+        <field name="model">estate.property.type</field>
+        <field name="arch" type="xml">
+            
+            <tree string="tree">
+                <field name="sequence" widget="handle"/>
+                <field name = "name" />
+                <field name = "offer_count" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form-->
+    <record id="property_type_form" model="ir.ui.view">
+        <field name="name">property.type.form</field>
+        <field name="model">estate.property.type</field>
+        <field name="arch" type="xml">
+
+            <form string="Test">
+                    <button type="action" name="%(estate_property_offer_window)d" class="oe_stat_button" icon="fa-money">
+                        <field name = "offer_count" /> Offers
+                    </button>
+                <sheet>
+                    <group>
+                        <field name = "name" />
+                    </group>
+                    <notebook>
+                        <page string='Property'>
+                            <field name='property_ids'>
+                                <tree string='Property'>
+                            
+                                    <field name = "title" />
+                                    <field name = "expected_price" />
+                                    <field name = "state" />                            
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Window -->
+    <record id="estate_property_type_window" model="ir.actions.act_window">
+
+        <field name="name">Property Type</field>
+        <field name="res_model">estate.property.type</field>
+        <field name="view_mode">tree,form</field>
+    
+    </record>
+</odoo>

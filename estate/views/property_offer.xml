@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<odoo>
+     <!-- Tree-->
+     <record id="property_offer_tree" model="ir.ui.view">
+        <field name="name">property.offer.tree</field>
+        <field name="model">estate.property.offer</field>
+        <field name="arch" type="xml">
+            
+            <tree string="tree" editable="top" decoration-danger="status=='refused'" decoration-success="status == 'accepted'">
+                <field name = "price" />
+                <field name = "partner_id" />
+                
+                <button name="accepted_button" string="Accepted" type="object" icon="fa-check" attrs="{'invisible': ['|',('status', '=', 'accepted'),('status', '=', 'refused')]}"/>
+                <button name="refused_button" string="Refused" type="object" icon="fa-times" attrs="{'invisible': ['|',('status', '=', 'accepted'),('status', '=', 'refused')]}"/>
+                
+                <field name = "status"/>
+                <field name = "create_date"/>
+            </tree>
+        
+        </field>
+    </record>
+
+    <!-- Form-->
+    <record id="property_offer_form" model="ir.ui.view">
+        <field name="name">property.offer.form</field>
+        <field name="model">estate.property.offer</field>
+        <field name="arch" type="xml">
+            <form string="Test">
+                <sheet>
+                    <group>
+                        <field name = "price" />
+                        <field name = "partner_id" />
+                        <field name = "validity" />
+                        <field name = "date_deadline" />
+                        <field name = "status" />
+                    </group>
+                   
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Window view -->
+    <record id="estate_property_offer_window" model="ir.actions.act_window">
+
+        <field name="name">Property Offer</field>
+        <field name="res_model">estate.property.offer</field>
+        <field name="view_mode">tree,form</field>    
+        <field name="domain">[('property_type_id', '=', active_id)]</field>
+
+    </record>
+</odoo>

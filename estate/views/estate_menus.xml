@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+
+<odoo>
+    
+    <!-- <menuitem id="real_estate" name="Real Estate">
+       
+        <menuitem id="advertisement" name="Advertisement">
+            <menuitem id="real_esate_property_menu_action" action="estate_property_window"/>
+        </menuitem>
+
+    </menuitem>  -->
+
+    <!-- Main menu -->
+    <menuitem
+    id="real_estate" name="Real Estate"/>
+
+    <menuitem
+    id="advertise" 
+    name="Advertisment"
+    parent="real_estate"/>
+
+    <menuitem
+    id="real_esate_property_menu_action" 
+    name="Real Estate"
+    action="estate_property_window"
+    parent="advertise"
+    />
+
+    <menuitem
+    id="settings" 
+    name="Settings"
+    parent="real_estate"/>
+
+    <menuitem
+    id="real_esate_property_type" name="Property Type"
+    action="estate_property_type_window"
+    parent="settings"
+    />
+
+    <menuitem
+    id="real_esate_property_tags" name="Property Tags"
+    action="estate_property_tags"
+    parent="settings"
+    />
+    
+
+</odoo>
