@@ -10,7 +10,7 @@ class property(models.Model):
     _name = "estate.property"
     _description = "Description of Real Estate Module"
     _rec_name = 'title'
-    _order = "id desc"
+    _order = "id asc"
 
     #models fields
     title= fields.Char('Title', required=True)
