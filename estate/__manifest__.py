@@ -6,8 +6,8 @@
     'depends':['base'],
     
     'data':[
-        'security/ir.model.access.csv',
         'security/security.xml',
+        'security/ir.model.access.csv',
         'views/property_offer.xml',
         'wizard/offer_wizard_view.xml',
         'views/property.xml',

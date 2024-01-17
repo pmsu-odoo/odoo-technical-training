@@ -8,7 +8,7 @@ class property(models.Model):
     
     #minimum definations
     _name = "estate.property"
-    _description = "Description of Real Estate Module"
+    _description = "Real Estate(training)"
     _rec_name = 'title'
     _order = "id asc"
 

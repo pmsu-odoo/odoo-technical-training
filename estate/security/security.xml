@@ -4,6 +4,8 @@
     <record id="estate_group_user" model="res.groups">
         <field name="name">Agent</field>
         <field name="category_id" ref="base.module_category_real_estate_brokerage"/>
+        <!-- <field name="implied_ids" eval="[(4, ref('estate_group_manager'))]"/> -->
+
     </record>
 
 
@@ -14,4 +16,23 @@
 
     </record>
 
+    <record id="record_rule_agent" model="ir.rule">
+        <field name="name">A Record rule for Agents</field>
+        <field name="model_id" ref="estate.model_estate_property"/>
+        <field name="groups" eval="[Command.link(ref('estate_group_user'))]"/>
+
+        <field name="perm_read" eval="True"/>
+               
+        <field name="domain_force">[
+            '|', ('salesman', '=', user.id),
+                 ('salesman', '=', False)
+        ]</field>
+    </record>
+
+    <record id="record_rule_manager" model="ir.rule">
+        <field name="name">A Record rule for Managers</field>
+        <field name="model_id" ref="estate.model_estate_property"/>
+        <field name="groups" eval="[Command.link(ref('estate_group_manager'))]"/>
+    </record>
+    
 </odoo>
