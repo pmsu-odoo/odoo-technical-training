@@ -61,6 +61,8 @@ class property(models.Model):
 
     rounding = fields.Float(string='Rounding Precision', required=True, default=0.01)
 
+    company_id = fields.Many2one('res.company', required=True, default=lambda self: self.env.company , readonly=True)
+
  
     #Sql Constraints
     _sql_constraints=[('check_expected_price','CHECK (expected_price > 0)','A property expected price can t be empty and negetive '),

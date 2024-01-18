@@ -47,11 +47,11 @@
 
                     <group>
                             <h1><field nolabel='1' name="title" placeholder="Enter your name"  style="width:1000%" class="oe_inline"/></h1><br/>
-                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'} " class="oe_inline"/>
                     </group>
                    
                     <group>
                         <group>
+                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'} "/>
                             <field name="postcode"/>
                             <field name="date_availability"/>
                             <field name= "property_type_id" options="{'no_create':true}"/>
@@ -67,6 +67,7 @@
                             <page string="Description">    
 
                                     <group>
+                                        <field name="company_id" class="oe_inline" options="{'no_create':true}" />
                                         <field name="description" class="oe_inline"/>
                                         <field name="bedrooms" class="oe_inline"/> 
                                         <field name="living_area" class="oe_inline"/>

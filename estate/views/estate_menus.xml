@@ -29,7 +29,8 @@
     <menuitem
     id="settings" 
     name="Settings"
-    parent="real_estate"/>
+    parent="real_estate"
+    groups="estate.estate_group_manager"/>
 
     <menuitem
     id="real_esate_property_type" name="Property Type"
