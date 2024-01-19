@@ -10,6 +10,8 @@
         'security/ir.model.access.csv',
         'views/property_offer.xml',
         'wizard/offer_wizard_view.xml',
+        'controllers/controller_template.xml',  #controller
+        'controllers/web_demo.xml',             #controller
         'views/property.xml',
         'views/property_type.xml',
         'views/property_tags.xml',

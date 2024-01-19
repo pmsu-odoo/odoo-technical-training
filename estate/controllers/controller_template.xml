@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<odoo>
+
+    <template id="index">
+        <title>Real Estate</title>
+        <t t-foreach="agents" t-as="agent">
+            <p><t t-esc="agent.id"/> <t t-esc="agent.name"/></p>
+        </t>
+    </template>
+
+</odoo> 

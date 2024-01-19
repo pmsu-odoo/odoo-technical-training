@@ -68,7 +68,7 @@ class property(models.Model):
     _sql_constraints=[('check_expected_price','CHECK (expected_price > 0)','A property expected price can t be empty and negetive '),
                     ('check_selling_price','CHECK(selling_price>=0)','A property selling price must be positive')]
 
-
+ 
     #Calculating total area:
     @api.depends('living_area','garden_area')
     def _compute_total_area(self):
@@ -96,8 +96,8 @@ class property(models.Model):
             else:
                 record.state='sold'
 
-        
- 
+
+
     def state_canceled(self):
         for record in self:
             if record.state=='sold':
