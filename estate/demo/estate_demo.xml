@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <odoo>
-    <data noupdate ="0">
+    <data noupdate ="True">
         <!-- Practice 1 -->
         <record id="estate_property_1" model="estate.property">
             <field name="title">Big Villa</field>
@@ -85,7 +85,7 @@
 
             <field name="offer_ids" eval="[
             Command.create({
-                'price': 2100000,
+                'price': 21990000000,
                 'partner_id':ref('base.res_partner_12'),
                 'property_id':'estate_property_3',
                             })

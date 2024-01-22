@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+
+<odoo>
+
+    <template id="controllers_index">
+        <t t-call="website.layout">
+            <t t-set="title">Agents</t>
+            <t t-out="title"/>
+            <div class="oe_structure">
+                <div class="container">
+                    <t t-foreach="agents" t-as="agent">
+                        <p>
+                            <!-- <t t-esc="agent.id" /> -->
+                            <a t-attf-href="/real_estate/{{ slug(agent) }}">
+
+                            <t t-esc="agent.name" /></a>
+                        </p>
+                    </t>
+                </div>
+            </div>
+        </t>   
+    </template>
+
+    <template id="biography">
+        <t t-call="website.layout">
+            <t t-set="title">Agents</t>
+            <div class="oe_structure"/>
+            <div class="oe_structure">
+                <div class="container">
+                    <h3 t-field="person.name"/>
+                    <p>Last modified: <i t-field="person.write_date" t-options='{"widget": "relative"}'/></p>
+                    <div t-field="person.biography"/>
+                </div>
+            </div>
+            <div class="oe_structure"/>
+        </t>
+    </template>
+
+</odoo>

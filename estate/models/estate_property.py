@@ -66,7 +66,7 @@ class property(models.Model):
  
     #Sql Constraints
     _sql_constraints=[('check_expected_price','CHECK (expected_price > 0)','A property expected price can t be empty and negetive '),
-                    ('check_selling_price','CHECK(selling_price>=0)','A property selling price must be positive')]
+                    ('check_selling_price','CHECK(selling_price >= 0)','A property selling price must be positive')]
 
  
     #Calculating total area:

@@ -36,7 +36,7 @@
         <field name="name">A Record rule for multi-company</field>
         <field name="model_id" ref="model_estate_property"/>
         <!-- <field name="groups" eval="[Command.link(ref('estate_group_user'))]"/> -->
-        <field name="global" eval="True"/>
+        <field name="global" eval="False"/>
         <field name="domain_force">
             [('company_id', 'in', company_ids)]
         </field>

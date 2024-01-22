@@ -1,7 +1,8 @@
 from odoo import models, fields, api
 
-class Teachers(models.Model):
+class Agents(models.Model):
     _name = 'real.estate.web'
     _description = 'Real Estate Web'
 
-    name = fields.Char() 
+    name = fields.Char()
+    biography = fields.Html()
