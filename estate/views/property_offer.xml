@@ -12,6 +12,8 @@
                 
                 <button name="accepted_button" string="Accepted" type="object" icon="fa-check" attrs="{'invisible': ['|',('status', '=', 'accepted'),('status', '=', 'refused')]}"/>
                 <button name="refused_button" string="Refused" type="object" icon="fa-times" attrs="{'invisible': ['|',('status', '=', 'accepted'),('status', '=', 'refused')]}"/>
+                <button name="duplicate" string="Duplicate" type="object" icon="fa-times"/>
+
                 
                 <field name = "status"/>
                 <field name = "create_date"/>
@@ -25,7 +27,7 @@
         <field name="name">property.offer.form</field>
         <field name="model">estate.property.offer</field>
         <field name="arch" type="xml">
-            <form string="Test">
+            <form string="Test" test1="uuuu">
                 <sheet>
 
                     <group>

@@ -34,7 +34,7 @@ class estate_property_offer(models.Model):
     def _date_deadline(self) :
         for offer in self:
             offer.create_date = offer.create_date if offer.create_date else date.today()
-            offer.date_deadline = offer.create_date + relativedelta(days = offer.validity)
+            offer.date_deadline = fields.Datetime.add(offer.create_date, days=offer.validity)
 
     def _inverse_deadline(self):
         for offer in self:
@@ -42,6 +42,7 @@ class estate_property_offer(models.Model):
             offer.validity = (offer.date_deadline - offer.create_date).days
 
     def accepted_button(self):
+        breakpoint()
         if 'accepted' in self.property_id.offer_ids.mapped('status') :
             raise UserError("An offer is already Accepted")
        
@@ -56,6 +57,10 @@ class estate_property_offer(models.Model):
             self.property_id.state = 'offer received'
             self.property_id.selling_price = 0.0
 
+    # practice
+   
+            # a.write({'price': 11234567234})
+
     @api.model_create_multi
     def create(self, vals):
         offer = super(estate_property_offer, self).create(vals)
@@ -66,12 +71,8 @@ class estate_property_offer(models.Model):
                 raise UserError ("Offer price cant be less than existing offers")
         return offer
 
-    # @api.model
-    # def create(self, vals):
-       
-    #     if self:
-    #         vals.property_id.state="offer received"
-    #     if vals.property_id.best_price > vals.price:
-    #         raise UserError ("Offer price cant be less than existing offers")
-
-    #     return super(estate_property_offer, self).create(vals)
+    def duplicate(self):    
+           for record in self:
+               print(record,"========================")
+               return self.copy(default = {'price': 9484852727 })
+    

@@ -21,6 +21,7 @@ class Agents(http.Controller):
     
     @http.route('/real_estate/<model("real.estate.web"):agent>/', auth='public', website=True)
     def agents(self, agent):
+
         return http.request.render('estate.biography', {
             'person': agent
         })

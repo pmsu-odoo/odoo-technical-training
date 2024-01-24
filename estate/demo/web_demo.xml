@@ -2,7 +2,7 @@
 <odoo>
 
     <record id="padilla" model="real.estate.web">
-        <field name="name">Diana Padilla</field>
+        <field name="name">Diana </field>
     </record>
     <record id="carroll" model="real.estate.web">
         <field name="name">Jody Carroll</field>

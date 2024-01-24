@@ -8,7 +8,7 @@ class property(models.Model):
     
     #minimum definations
     _name = "estate.property"
-    _description = "Real Estate(training)"
+    _description = "Real Estate"
     _rec_name = 'title'
     _order = "id asc"
 
@@ -80,6 +80,16 @@ class property(models.Model):
         for record in self:
             record.best_price = max(record.offer_ids.mapped("price")) if record.offer_ids else 0.0 
 
+        
+    def test(self):
+        all_records = self.env['estate.property.offer'].browse(1)
+        
+        for record in all_records:
+            print(record,'+++++++++++++++++++++++++++++++++++++++++++++++++++++')
+
+
+
+
     @api.onchange('garden')
     def onchange_garden(self):
         if self.garden:
@@ -114,9 +124,8 @@ class property(models.Model):
 
     @api.ondelete(at_uninstall=False)
     def _parameter_for_deletion(self):
-        for record in self:
-            if not record.state in ('new','canceled'):
-                raise UserError("A state whic is not in New or Canceled state can't be deleted")
+        if any(record.state not in ['new', 'canceled'] for record in self):
+            raise UserError("A state whic is not in New or Canceled state can't be deleted")
 
     def return_wizard(self):
         return {
@@ -126,3 +135,4 @@ class property(models.Model):
                 'view_mode':'form',
                 'target':'new'
         }
+    
