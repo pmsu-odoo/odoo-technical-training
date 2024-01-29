@@ -38,11 +38,19 @@
             <form string="Test">
                 <header>
                     <!-- <group attrs="{'invisible': ['|',('state', '=', 'sold'),('state', '=', 'canceled')]}"> -->
-                    <button name="state_sold" type="object" string="Sold" />
-                    <button name="state_canceled" type="object" string="Canceled"/>
-                    <button name="test" type="object" string="Test"/>
+                    
+                    
+                    
+                    <button name="state_sold" type="object" string="Sold" attrs="{'invisible': ['|',('state', '=', 'sold'),('state', '=', 'canceled')]}" />
+                    <button name="state_canceled" type="object" string="Canceled" attrs="{'invisible': ['|',('state', '=', 'sold'),('state', '=', 'canceled')]}" />
+                    <button name="Browse" type="object" string="Company"/>
                     <button name="accepted_offer" type="object" string="Accepted offer"/>
                     <button name="unlink_rejected_offer" type="object" string="Delete rejected offer"/>
+                    <button name="Filter" type="object" string="Total Offers"/>
+                    <button name="sorted_off" type="object" string="sorted Offers"/>
+
+
+
 
                     <!-- </group> -->
                     <field name="state" widget="statusbar" statusbar_visible="new,offer received,offer accepted,sold,canceled"/>
@@ -134,6 +142,7 @@
                 <field name="selling_price"/>
                 <field name="date_availability" optional="hide"/>
                 <field name="tag_ids" widget="many2many_tags"/>
+                <button type="object" name="delete_property" string="Delete"/>
                 <field name="state" invisible="1"/>
 
 

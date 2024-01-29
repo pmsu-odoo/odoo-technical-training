@@ -56,22 +56,18 @@ class estate_property_offer(models.Model):
             self.property_id.state = 'offer received'
             self.property_id.selling_price = 0.0
 
-    # practice
-   
-            # a.write({'price': 11234567234})
-
     @api.model_create_multi
     def create(self, vals):
         offer = super(estate_property_offer, self).create(vals)
         for records in offer:
             if vals:
-                offer.property_id.state="offer received"
-            if offer.property_id.best_price > offer.price:
-                raise UserError ("Offer price cant be less than existing offers")
+                records.property_id.state="offer received"
+            # if records.property_id.best_price > records.price:
+            #     raise UserError ("Offer price cant be less than existing offers")
         return offer
 
+    #Copy method
     def duplicate(self):    
            for record in self:
                print(record,"========================")
-               return self.copy(default = {'price': 9484852727 })
-    
+               uplicate = self.copy(default = {'price': 9484852727 })

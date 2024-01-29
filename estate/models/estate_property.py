@@ -23,7 +23,7 @@ class property(models.Model):
 
     date_availability=fields.Date("Available From",copy=False,default =datetime.now()+relativedelta(months=3))
 
-    expected_price=fields.Float("Expected price",required = True)
+    expected_price=fields.Float("Expected price",required = False)
     
     selling_price=fields.Float("Selling Price",copy=False,readonly=True)
     
@@ -59,8 +59,6 @@ class property(models.Model):
 
     best_price = fields.Float(compute="_best_offer")
 
-    rounding = fields.Float(string='Rounding Precision', required=True, default=0.01)
-
     company_id = fields.Many2one('res.company', required=True, default=lambda self: self.env.company , readonly=True)
 
  
@@ -81,31 +79,28 @@ class property(models.Model):
             record.best_price = max(record.offer_ids.mapped("price")) if record.offer_ids else 0.0 
 
         
-    def test(self):
-        all_records = self.env['estate.property.offer'].browse(1)
+    def Browse(self):
+        all_records = self.env['res.company'].browse(self.company_id.id)                            #bROWSE METHOD
         
         for record in all_records:
-            print(record,'+++++++++++++++++++++++++++++++++++++++++++++++++++++')
-
-
+            print("###Company name :",record.name)
 
 
     @api.onchange('garden')
     def onchange_garden(self):
         if self.garden:
             self.garden_area = 10.0
-            self. garden_orientation= 'North'
+            self. garden_orientation = 'North'
         else :
             self.garden_area = 0.0
-            self. garden_orientation= False
+            self. garden_orientation = False
 
     def state_sold(self):
         for record in self:
             if record.state == 'canceled':
                 raise UserError("Canceled property can't sold")
             else:
-                record.state='sold'
-
+                self.write({'state': 'sold'})                                   #write method
 
 
     def state_canceled(self):
@@ -113,19 +108,24 @@ class property(models.Model):
             if record.state=='sold':
                 raise UserError("Sold property can't canceled")
             else:
-                record.state = 'canceled'
+                self.write({'state': 'canceled'})                               #write method
+
 
     
     @api.constrains('selling_price')
     def check_selling_price(self):
         for record in self:
-            if (not float_utils.float_is_zero(record.selling_price, precision_rounding=record.rounding) and float_utils.float_compare(record.selling_price,(0.9*(record.expected_price)),precision_rounding=record.rounding)<0):
+            if (not float_utils.float_is_zero(record.selling_price, precision_rounding=0.001) and float_utils.float_compare(record.selling_price,(0.9*(record.expected_price)),precision_rounding=0.01)<0):
                 raise ValidationError("Selling price can't lessthan 90 percent of expected price")
 
     @api.ondelete(at_uninstall=False)
     def _parameter_for_deletion(self):
-        if any(record.state not in ['new', 'canceled'] for record in self):
-            raise UserError("A state whic is not in New or Canceled state can't be deleted")
+        # if any(record.state not in ['new', 'canceled'] for record in self):
+
+        if not self.exists().state in ['new', 'canceled'] :                                                     #exist() method
+            raise UserError("A state which is not in New or Canceled state can't be deleted")
+        
+
 
     def return_wizard(self):
         return {
@@ -161,14 +161,30 @@ class property(models.Model):
     #unlink
     def unlink_rejected_offer(self):
         rejected_offers = self.env['estate.property.offer'].search(["&",('property_id','=',self.id),('status', '=', "refused")])
+        
+        #search count
         rejected_offers_counts = self.env['estate.property.offer'].search_count(["&",('property_id','=',self.id),('status', '=', "refused")])
 
         print(rejected_offers_counts,"============================================================================")
 
         for offer in rejected_offers:
             offer.unlink()
-
+    
+    #Unlink the property
+    def delete_property(self):
+        aaa = self.unlink()
+        print(aaa)
     def duplicate(self):
-        return self.name_create({'title':'Lead1 Email Customer',
-                                                'expected_price':100 ,
-                                                'state':'new'})
+        return self.name_create('title')
+
+    #Filtered Method
+    def Filter(self):
+        offers = self.env['estate.property.offer'].search([('')]).filtered(lambda r: r.property_id == self)
+        for offer in offers:
+            print("=================",offer.price)
+
+    #sorted Method
+    def sorted_off(self):
+        sorted_offers=self.env['estate.property.offer'].search([('property_id','=',self.id)]).sorted(key=lambda p:p.price, reverse=True)
+        for a in sorted_offers:
+            print('=====================================',a.price)
