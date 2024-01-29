@@ -133,6 +133,42 @@ class property(models.Model):
                 'res_model':'offer.wizard',
                 'name':'Add Offer',
                 'view_mode':'form',
-                'target':'new'
+                'target':'new',
+                
         }
-    
+
+
+    #search method
+    def accepted_offer(self):
+        customer = self.env['estate.property.offer'].search(["&",('property_id','=',self.id),('status', '=', "accepted")])
+        print(customer.id)
+        print("Price:",customer.price)
+        print("\nProperty:",customer.partner_id.name)
+        print("\nCustomer:",customer.property_id.title)
+
+        # return self.env.ref('estate_property_offer').fields_view_get(view_id=customer.id)
+        return {
+                'type':'ir.actions.act_window',
+                'res_model':'estate.property.offer',
+                'name':'Accepted Offer',
+                'view_mode':'form',
+                'target':'new',
+                'res_id': customer.id ,
+                'context' : {'test':True}
+                
+        }
+
+    #unlink
+    def unlink_rejected_offer(self):
+        rejected_offers = self.env['estate.property.offer'].search(["&",('property_id','=',self.id),('status', '=', "refused")])
+        rejected_offers_counts = self.env['estate.property.offer'].search_count(["&",('property_id','=',self.id),('status', '=', "refused")])
+
+        print(rejected_offers_counts,"============================================================================")
+
+        for offer in rejected_offers:
+            offer.unlink()
+
+    def duplicate(self):
+        return self.name_create({'title':'Lead1 Email Customer',
+                                                'expected_price':100 ,
+                                                'state':'new'})

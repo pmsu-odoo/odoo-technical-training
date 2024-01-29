@@ -42,7 +42,6 @@ class estate_property_offer(models.Model):
             offer.validity = (offer.date_deadline - offer.create_date).days
 
     def accepted_button(self):
-        breakpoint()
         if 'accepted' in self.property_id.offer_ids.mapped('status') :
             raise UserError("An offer is already Accepted")
        

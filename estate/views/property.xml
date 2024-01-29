@@ -37,12 +37,14 @@
         <field name="arch" type="xml">
             <form string="Test">
                 <header>
-                    <group attrs="{'invisible': ['|',('state', '=', 'sold'),('state', '=', 'canceled')]}">
+                    <!-- <group attrs="{'invisible': ['|',('state', '=', 'sold'),('state', '=', 'canceled')]}"> -->
                     <button name="state_sold" type="object" string="Sold" />
                     <button name="state_canceled" type="object" string="Canceled"/>
                     <button name="test" type="object" string="Test"/>
+                    <button name="accepted_offer" type="object" string="Accepted offer"/>
+                    <button name="unlink_rejected_offer" type="object" string="Delete rejected offer"/>
 
-                    </group>
+                    <!-- </group> -->
                     <field name="state" widget="statusbar" statusbar_visible="new,offer received,offer accepted,sold,canceled"/>
                 </header>
                 <sheet>
@@ -107,7 +109,8 @@
         </field>
 
     </record>
-
+ 
+    
     <!-- Tree view -->
     <record id="estate_property_tree" model="ir.ui.view">
         <field name="name">estate.property.tree</field>
@@ -117,6 +120,8 @@
             <tree string="tree" decoration-success="state in ('offer received','offer accepted')" decoration-bf = "state == 'offer accepted'">
                 <header>
                     <button type="object" name="return_wizard" string="Add Offer"/>
+                    <button name="duplicate" string="duplicate" type="object" icon="fa-check"/>
+
                 </header>
 
                 <field name="sequence" widget="handle"/>
@@ -130,6 +135,7 @@
                 <field name="date_availability" optional="hide"/>
                 <field name="tag_ids" widget="many2many_tags"/>
                 <field name="state" invisible="1"/>
+
 
     
             </tree>
