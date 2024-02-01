@@ -56,6 +56,6 @@ class estate_property_offer(models.Model):
                 records.property_id.state="offer_received"
         return offer
 
-    def duplicate(self):
+    def duplicating(self):
         for record in self:
-            duplicate = self.copy(default = {'price': 12345 })
+            duplicate = record.copy(default = {'price': 12345 })

@@ -39,7 +39,6 @@
         </t>
     </template>
 
-
     <!-- Sub template for offer table -->
     <template id="property_offers_sub_template">
         <div>
@@ -80,7 +79,7 @@
                     </td>
                 </tr>
             </tbody>
-            </table>        
+            </table>
     </template>
 
     <!-- Users property template-->
@@ -96,14 +95,14 @@
                         <t t-set="properties" t-value="user.mapped('property_ids')" />
                         <t t-foreach="properties" t-as="property">
                             <h3>
-                                <span t-field="property.name"/>
+                                <span t-field="property.title"/>
                             </h3>
                             <t t-call="estate.property_offers_sub_template"/>
                         </t>
                     </div>
                 </t>
             </t>
-        </t>        
+        </t>
     </template>
 
 </odoo>

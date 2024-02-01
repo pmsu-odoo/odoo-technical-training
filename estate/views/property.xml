@@ -27,7 +27,7 @@
             </search>
         </field>
     </record>
-    
+
     <!-- Form view -->
     <record id="estate_property_form" model="ir.ui.view">
         <field name="name">estate.property.form</field>
@@ -38,10 +38,10 @@
                 <header>
                     <button name="state_sold" type="object" string="Sold" attrs="{'invisible': ['|',('state', '=', 'sold'),('state', '=', 'canceled')]}" />
                     <button name="state_canceled" type="object" string="Canceled" attrs="{'invisible': ['|',('state', '=', 'sold'),('state', '=', 'canceled')]}" />
-                    <button name="Browse" type="object" string="Company info"/>
+                    <button name="browsing" type="object" string="Company info"/>
                     <button name="accepted_offer" type="object" string="Accepted offer"/>
                     <button name="unlink_rejected_offer" type="object" string="Delete rejected offer"/>
-                    <button name="Filter" type="object" string="Total Offers"/>
+                    <button name="filtering" type="object" string="Total Offers"/>
                     <button name="sorted_off" type="object" string="Offer with Higest price"/>
                     <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold,canceled"/>
                 </header>
@@ -50,7 +50,7 @@
                     <group>
                             <h1><field nolabel='1' name="title" placeholder="Enter your name"  style="width:1000%" class="oe_inline"/></h1><br/>
                     </group>
-                   
+
                     <group>
                         <group>
                             <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'} "/>
@@ -59,7 +59,7 @@
                             <field name="ending_date"/>
                             <field name= "property_type_id" options="{'no_create':true}"/>
                         </group>
-                    
+
                         <group>
                             <field name="expected_price"/>
                             <field name="selling_price"/>
@@ -101,8 +101,8 @@
             </form>
         </field>
     </record>
- 
-    
+
+
     <!-- Tree view -->
     <record id="estate_property_tree" model="ir.ui.view">
         <field name="name">estate.property.tree</field>
@@ -217,4 +217,4 @@
         <field name="context">{'search_default_available':'True'}</field>
     </record>
 
-</odoo> 
+</odoo>

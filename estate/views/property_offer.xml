@@ -12,7 +12,7 @@
                 
                 <button name="accepted_button" string="Accepted" type="object" icon="fa-check" attrs="{'invisible': ['|',('status', '=', 'accepted'),('status', '=', 'refused')]}"/>
                 <button name="refused_button" string="Refused" type="object" icon="fa-times" attrs="{'invisible': ['|',('status', '=', 'accepted'),('status', '=', 'refused')]}"/>
-                <button name="duplicate" string="Duplicate" type="object" icon="fa-times" attrs="{'invisible': ['|',('status', '=', 'accepted'),('status', '=', 'refused')]}"/>
+                <button name="duplicating" string="Duplicate" type="object" icon="fa-times" attrs="{'invisible': ['|',('status', '=', 'accepted'),('status', '=', 'refused')]}"/>
                 
                 <field name = "status"/>
                 <field name = "create_date"/>

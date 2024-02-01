@@ -90,16 +90,17 @@ class property(models.Model):
 
     @api.ondelete(at_uninstall=False)
     def _parameter_for_deletion(self):
-        if not self.exists().state in ['new', 'canceled']:
-            raise UserError("A state which is not in New or Canceled state can't be deleted")
+        for record in self:
+            if not record.exists().state in ['new', 'canceled']:
+                raise UserError("A state which is not in New or Canceled state can't be deleted")
 
     def unlink_rejected_offer(self):
-        rejected_offers = self.env['estate.property.offer'].search(["&",('property_id','=',self.id),('status', '=', "refused")])
-        rejected_offers_counts = self.env['estate.property.offer'].search_count(["&",('property_id','=',self.id),('status', '=', "refused")])
+        rejected_offers = self.offer_ids.search(["&",('property_id','=',self.id),('status', '=', "refused")])
+        rejected_offers_counts = self.offer_ids.search_count(["&",('property_id','=',self.id),('status', '=', "refused")])
 
         for offer in rejected_offers:
             offer.unlink()
-    
+
     def delete_property(self):
         delete = self.unlink()
 
@@ -116,7 +117,7 @@ class property(models.Model):
                 }
 
     def accepted_offer(self):
-        customer = self.env['estate.property.offer'].search(["&",('property_id','=',self.id),('status', '=', "accepted")])
+        customer = self.offer_ids.search(["&",('property_id','=',self.id),('status', '=', "accepted")])
         return {
                 'type':'ir.actions.act_window',
                 'res_model':'estate.property.offer',
@@ -126,8 +127,8 @@ class property(models.Model):
                 'res_id': customer.id
                 }
 
-    def Filter(self):
-        offers = self.env['estate.property.offer'].search([('property_id','=',self.id)]).filtered(lambda r: r.price > self.expected_price)
+    def filtering(self):
+        offers = self.offer_ids.search([('property_id','=',self.id)]).filtered(lambda r: r.price > self.expected_price)
         return {
                 'type':'ir.actions.act_window',
                 'res_model':'estate.property.offer',
@@ -137,8 +138,9 @@ class property(models.Model):
                 'target':'new',
                 'domain': [('id', 'in', offers.ids)]
                 }
-    def Browse(self):
-        all_records = self.env['res.company'].browse(self.company_id.id)                            
+
+    def browsing(self):
+        all_records = self.env['res.company'].browse(self.company_id.id)
         for record in all_records:
             return {
                     'type':'ir.actions.act_window',
@@ -150,7 +152,7 @@ class property(models.Model):
                     }
 
     def sorted_off(self):
-        sorted_offers=self.env['estate.property.offer'].search([('property_id','=',self.id)]).sorted(key=lambda p:p.price, reverse=True)
+        sorted_offers=self.offer_ids.search([('property_id','=',self.id)]).sorted(key=lambda p:p.price, reverse=True)
         for sorted_o in sorted_offers:
             return {
                     'type':'ir.actions.act_window',
