@@ -13,6 +13,7 @@
                 <field name = "name" />
                 <field name = "offer_count" />
             </tree>
+
         </field>
     </record>
 
@@ -21,23 +22,23 @@
         <field name="name">property.type.form</field>
         <field name="model">estate.property.type</field>
         <field name="arch" type="xml">
-
             <form string="Test">
-
                 <sheet>
+
                     <div class="oe_button_box" name="button_box" position="inside" >
                         <button type="action" name="%(estate_property_offer_window)d" class="oe_stat_button  " icon="fa-money" >
                             <field name = "offer_count" /> Offers
                         </button>
                     </div>
+
                     <group>
                         <field name = "name" />
                     </group>
+
                     <notebook>
                         <page string='Property'>
                             <field name='property_ids'>
                                 <tree string='Property'>
-                            
                                     <field name = "title" />
                                     <field name = "expected_price" />
                                     <field name = "state" />                            
@@ -45,6 +46,7 @@
                             </field>
                         </page>
                     </notebook>
+
                 </sheet>
             </form>
         </field>
@@ -52,10 +54,8 @@
 
     <!-- Window -->
     <record id="estate_property_type_window" model="ir.actions.act_window">
-
         <field name="name">Property Type</field>
         <field name="res_model">estate.property.type</field>
         <field name="view_mode">tree,form</field>
-    
     </record>
 </odoo>

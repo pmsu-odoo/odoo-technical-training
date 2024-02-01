@@ -8,6 +8,7 @@
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
             <search string="Delivery Carrier">
+
                 <field name="title" />
                 <field name="postcode"/>
                 <field name="expected_price"/>
@@ -15,8 +16,7 @@
                 <field name="living_area" filter_domain = "[('living_area', '>=', self)]"/>
                 <field name="facades"/>
                 <field name= "property_type_id"/>
-
-                <filter name="available" string="Available" domain="['|',('state', '=', 'new'),('state', '=', 'offer received')]"/>
+                <filter name="available" string="Available" domain="['|',('state', '=', 'new'),('state', '=', 'offer_received')]"/>
                 <filter name="canceled" string="canceled" domain="[('state', '=', 'canceled')]"/>
 
                 <group  string="Group By">
@@ -25,9 +25,7 @@
                 </group>
 
             </search>
-
         </field>
-        
     </record>
     
     <!-- Form view -->
@@ -36,27 +34,19 @@
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
             <form string="Test">
+
                 <header>
-                    <!-- <group attrs="{'invisible': ['|',('state', '=', 'sold'),('state', '=', 'canceled')]}"> -->
-                    
-                    
-                    
                     <button name="state_sold" type="object" string="Sold" attrs="{'invisible': ['|',('state', '=', 'sold'),('state', '=', 'canceled')]}" />
                     <button name="state_canceled" type="object" string="Canceled" attrs="{'invisible': ['|',('state', '=', 'sold'),('state', '=', 'canceled')]}" />
-                    <button name="Browse" type="object" string="Company"/>
+                    <button name="Browse" type="object" string="Company info"/>
                     <button name="accepted_offer" type="object" string="Accepted offer"/>
                     <button name="unlink_rejected_offer" type="object" string="Delete rejected offer"/>
                     <button name="Filter" type="object" string="Total Offers"/>
-                    <button name="sorted_off" type="object" string="sorted Offers"/>
-
-
-
-
-                    <!-- </group> -->
-                    <field name="state" widget="statusbar" statusbar_visible="new,offer received,offer accepted,sold,canceled"/>
+                    <button name="sorted_off" type="object" string="Offer with Higest price"/>
+                    <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold,canceled"/>
                 </header>
-                <sheet>
 
+                <sheet>
                     <group>
                             <h1><field nolabel='1' name="title" placeholder="Enter your name"  style="width:1000%" class="oe_inline"/></h1><br/>
                     </group>
@@ -66,6 +56,7 @@
                             <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'} "/>
                             <field name="postcode"/>
                             <field name="date_availability"/>
+                            <field name="ending_date"/>
                             <field name= "property_type_id" options="{'no_create':true}"/>
                         </group>
                     
@@ -77,7 +68,6 @@
 
                         <notebook>
                             <page string="Description">    
-
                                     <group>
                                         <field name="company_id" class="oe_inline" options="{'no_create':true}" />
                                         <field name="description" class="oe_inline"/>
@@ -91,7 +81,6 @@
                                         <field name="state" class="oe_inline" />
                                         <field name="total_area" class="oe_inline"/>
                                     </group>
-                            
                             </page>
 
                             <page string="Other Info">
@@ -99,23 +88,18 @@
                                     <field name="salesman" class="oe_inline"/>
                                     <field name="buyer" class="oe_inline"/>
                                 </group>
-                            
                             </page>
 
                             <page string="Offers">
-                                    <field name='offer_ids' attrs="{'readonly': [('state', 'in', ('offer accepted', 'sold', 'canceled'))]}"/>
+                                    <field name='offer_ids' attrs="{'readonly': [('state', 'in', ('offer_accepted', 'sold', 'canceled'))]}"/>
                             </page>
 
                         </notebook>
-
                     </group>
-
                 </sheet>
 
             </form>
-
         </field>
-
     </record>
  
     
@@ -124,12 +108,11 @@
         <field name="name">estate.property.tree</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
-            
-            <tree string="tree" decoration-success="state in ('offer received','offer accepted')" decoration-bf = "state == 'offer accepted'">
+            <tree string="tree" decoration-success="state in ('offer_received','offer_accepted')" decoration-bf = "state == 'offer_accepted'">
+
                 <header>
                     <button type="object" name="return_wizard" string="Add Offer"/>
                     <button name="duplicate" string="duplicate" type="object" icon="fa-check"/>
-
                 </header>
 
                 <field name="sequence" widget="handle"/>
@@ -145,47 +128,93 @@
                 <button type="object" name="delete_property" string="Delete"/>
                 <field name="state" invisible="1"/>
 
-
-    
             </tree>
-        
         </field>
     </record>
 
     <!-- Kanban View -->
     
     <record id="estate_property_kanban" model="ir.ui.view">
-            <field name="name">estate.property.kanban</field>
-            <field name="model">estate.property</field>
-            <field name="arch" type="xml">
-                            <kanban default_group_by = "property_type_id" records_draggable= "1">
-                                <field name='state' invisible = "1"/>
-                                <templates>
-                                    <t t-name="kanban-box">
-                                        <div class="oe_kanban_global_click">
-                                            
-                                            <field name="title" string="Title"/><br/>
-                                            Expected Price: <field name="expected_price"/><br/>
-                                            <div t-if="record.state.raw_value == 'new'"> Best price: <field name = "best_price"/> </div><br/>
-                                            <div t-if="record.state.raw_value == 'offer accepted'">Selling Price: <field name="selling_price"/> </div><br/>
-                                            <field name="tag_ids" widget="many2many_tags"/><br/>
+        <field name="name">estate.property.kanban</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by = "property_type_id" records_draggable= "1">
 
-                                        </div>
-                                    </t>
-                                </templates>
-                            </kanban>
-            </field>
+                <field name='state' invisible = "1"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <field name="title" string="Title"/><br/>
+                            Expected Price: <field name="expected_price"/><br/>
+                            <div t-if="record.state.raw_value == 'new'"> Best price: <field name = "best_price"/></div><br/>
+                            <div t-if="record.state.raw_value == 'offer_accepted'">Selling Price: <field name="selling_price"/></div><br/>
+                            <field name="tag_ids" widget="many2many_tags"/><br/>
+                        </div>
+                    </t>
+                </templates>
+
+            </kanban>
+        </field>
     </record>
+
+    <!-- Calander view -->
+    <record id="property_offer_calendar" model="ir.ui.view">
+        <field name="name">estate.property.calendar</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+
+            <calendar string="Property calendar" date_start="date_availability">
+                <field name="title" string = "Title" />
+                <field name="date_availability" string = "Available from:" /> 
+            </calendar>
+
+        </field>
+    </record>
+
+    <!-- Graph View -->
+    <record id = "property_offer_graph" model="ir.ui.view">
+        <field name="name">estate.property.graph</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+
+            <graph string="graph of Properties">
+                <field name="title" string = "Title" />
+                <field name="expected_price" string = "Expected price" />
+            </graph>
+        
+        </field>
+    </record>
+
+    <!-- Cohort view -->
+    <record id="retyui" model="ir.ui.view">
+        <field name="name">estate.property.view.cohort</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <cohort string="Properties" date_start="create_date" date_stop="ending_date" interval="day" mode="churn"/>
+        </field>
+    </record>
+
+    <!-- Pivot view -->
+    <record id="property_offer_pivot" model="ir.ui.view">
+        <field name="name">estate.property.pivot</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+
+            <pivot string="Property Pivot Table">
+                <field name="title" type="col"/>
+                <field name="date_availability" type="row"/>
+            </pivot>
+
+        </field>
+   </record>
 
     <!-- Window view -->
     <record id="estate_property_window" model="ir.actions.act_window">
-
         <field name="name">Real Estate</field>
+        <field name="type">ir.actions.act_window</field>
         <field name="res_model">estate.property</field>
-        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_mode">tree,kanban,form,calendar,graph,pivot,cohort</field>
         <field name="context">{'search_default_available':'True'}</field>
-    
     </record>
-
 
 </odoo> 

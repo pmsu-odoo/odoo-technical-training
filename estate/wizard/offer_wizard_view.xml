@@ -1,32 +1,27 @@
 <?xml version="1.0"?>
 <odoo>
 
-    <!-- form view -->
     <record id="offer_wizard_form" model="ir.ui.view">
         <field name="name">wizard.offer.form</field>
         <field name="model">offer.wizard</field>
         <field name="arch" type="xml">
+            
             <form string="Test">
             <sheet>
                 <group>
                     <field name="price" class="oe_inline"/>
                     <field name="buyer" class="oe_inline"/>
                     <field name="validity" class="oe_inline"/>
-
                 </group>
             </sheet>
             <footer>
                 <button name="wizard_action" type="object" string="Confirm" />
                 <button special="cancel" type="object" string="Cancel" />
-
             </footer>
-            </form>        
+            </form>
+
         </field>
-            
     </record>
-
-
-
 
     <record id="offer_wizard" model="ir.actions.act_window">
         <field name="name">Offer Wizard</field>
@@ -34,4 +29,5 @@
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>
+
 </odoo>

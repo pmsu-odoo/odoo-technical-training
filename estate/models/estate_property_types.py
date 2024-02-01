@@ -9,16 +9,12 @@ class estate_property_type(models.Model):
     # Fields
     name = fields.Char('Name',required=True)
     sequence = fields.Integer('Sequence',default=1.0)
-
     offer_count = fields.Integer(compute='_total_offers')
-    
-    #Relational Feilds
     property_ids = fields.One2many('estate.property','property_type_id',string='Property')
 
     #Sql Constraints
     _sql_constraints=[('check_name','UNIQUE (name)','Each Type must be unique')]
 
-    #Compute methods
     @api.depends('property_ids.offer_ids')
     def _total_offers(self):
         for record in self:         

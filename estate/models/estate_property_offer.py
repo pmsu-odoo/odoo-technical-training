@@ -10,21 +10,14 @@ class estate_property_offer(models.Model):
     _description="Offers in property"
     _order = "price desc"
 
-    # Fiedl
+    # Fields
     price =fields.Float(string="Price",required=True)
-    
     status = fields.Selection([('accepted','Accepted'),('refused','Refused')],copy = False)
-
     partner_id =fields.Many2one('res.partner',required=True)
-
     property_id = fields.Many2one('estate.property',required=True)
-
     validity = fields.Integer(string="Validity (days)",default=7)
-
     date_deadline = fields.Date(compute = '_date_deadline',inverse='_inverse_deadline')
-
     property_type_id = fields.Many2one("estate.property.type",related = 'property_id.property_type_id', store = True)
-
     create_date=fields.Date()
 
     #Sql Constraints 
@@ -46,28 +39,23 @@ class estate_property_offer(models.Model):
             raise UserError("An offer is already Accepted")
        
         self.status='accepted'
-        self.property_id.state = 'offer accepted' 
+        self.property_id.state = 'offer_accepted' 
         self.property_id.selling_price = self.price
         self.property_id.buyer = self.partner_id.id
 
-
     def refused_button(self):
-            self.status='refused'
-            self.property_id.state = 'offer received'
-            self.property_id.selling_price = 0.0
+        self.status='refused'
+        self.property_id.state = 'offer_received'
+        self.property_id.selling_price = 0.0
 
     @api.model_create_multi
     def create(self, vals):
         offer = super(estate_property_offer, self).create(vals)
         for records in offer:
             if vals:
-                records.property_id.state="offer received"
-            # if records.property_id.best_price > records.price:
-            #     raise UserError ("Offer price cant be less than existing offers")
+                records.property_id.state="offer_received"
         return offer
 
-    #Copy method
-    def duplicate(self):    
-           for record in self:
-               print(record,"========================")
-               uplicate = self.copy(default = {'price': 9484852727 })
+    def duplicate(self):
+        for record in self:
+            duplicate = self.copy(default = {'price': 12345 })

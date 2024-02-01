@@ -9,19 +9,18 @@ class Agents(http.Controller):
         Estate = request.env['real.estate.web']
         return request.render('estate.controllers_index', {
              'agents': Estate.search([])
-         })  
+         })
 
-    # @http.route('/real_estate/<name>/', auth='public', website=True)
+    # @http.route('/real_estate/<name>/', auth='public', website=True)                                      #exercise 1
     # def agent(self, name):
     #     return '<h1>{}</h1>'.format(name)
 
-    # @http.route('/real_estate/<int:id>/', auth='public', website=True)
+    # @http.route('/real_estate/<int:id>/', auth='public', website=True)                                    #exercise 2
     # def agent(self, id):
     #     return '<h1>{} ({})</h1>'.format(id, type(id).__name__)
-    
-    @http.route('/real_estate/<model("real.estate.web"):agent>/', auth='public', website=True)
-    def agents(self, agent):
 
+    @http.route('/real_estate/<model("real.estate.web"):agent>/', auth='public', website=True)              #exercise 3
+    def agents(self, agent):
         return http.request.render('estate.biography', {
             'person': agent
         })

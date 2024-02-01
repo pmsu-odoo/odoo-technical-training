@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <record id="property_offer_report" model="ir.actions.report">
-        
         <field name="name">Offer Report</field>
         <field name="model">estate.property</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">estate.property_offers_template</field>
-       
     </record>
 
     <record id="user_property_report" model="ir.actions.report">
-        
         <field name="name">User property Report</field>
         <field name="model">res.users</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">estate.users_property_template</field>
         <field name="binding_model_id" ref="base.model_res_users"/>
-
     </record>
 
 </odoo>

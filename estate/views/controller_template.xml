@@ -10,9 +10,7 @@
                 <div class="container">
                     <t t-foreach="agents" t-as="agent">
                         <p>
-                            <!-- <t t-esc="agent.id" /> -->
                             <a t-attf-href="/real_estate/{{ slug(agent) }}">
-
                             <t t-esc="agent.name" /></a>
                         </p>
                     </t>
@@ -29,8 +27,7 @@
                 <div class="container">
                     <h3 t-field="person.name"/>
                     <p>Last modified: <i t-field="person.write_date" /></p>
-                    <div t-field="person.biography"/>
-                </div>
+                    <div t-field="person.biography"/></div>
             </div>
             <div class="oe_structure"/>
         </t>
