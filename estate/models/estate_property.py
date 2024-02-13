@@ -45,9 +45,8 @@ class property(models.Model):
 
     @api.depends('date_availability')
     def _compute_end_date(self):
-        dates = self.browse([self.id])
-        for date in dates:
-            date.ending_date = date.date_availability + timedelta(days=7)
+        for record in self:
+            record.ending_date = record.date_availability + timedelta(days=7)
 
     @api.depends('living_area','garden_area')
     def _compute_total_area(self):
@@ -114,18 +113,25 @@ class property(models.Model):
                 'name':'Add Offer',
                 'view_mode':'form',
                 'target':'new',
+                'flags': {'mode': 'readonly'},
                 }
 
     def accepted_offer(self):
         customer = self.offer_ids.search(["&",('property_id','=',self.id),('status', '=', "accepted")])
-        return {
+        if customer:
+            return {
                 'type':'ir.actions.act_window',
                 'res_model':'estate.property.offer',
                 'name':'Accepted Offer',
                 'view_mode':'form',
                 'target':'new',
-                'res_id': customer.id
+                'res_id': customer.id,
+                'flags': {'mode': 'readonly'},
                 }
+        else :
+            raise ValidationError("NO Accepted offers")
+
+
 
     def filtering(self):
         offers = self.offer_ids.search([('property_id','=',self.id)]).filtered(lambda r: r.price > self.expected_price)
@@ -133,10 +139,10 @@ class property(models.Model):
                 'type':'ir.actions.act_window',
                 'res_model':'estate.property.offer',
                 'name':'Total Offer',
-                'view_type': 'tree',
+                'view_type': 'tree,form',
                 'view_mode':'tree,form',
                 'target':'new',
-                'domain': [('id', 'in', offers.ids)]
+                'domain': [('id', 'in', offers.ids)],
                 }
 
     def browsing(self):
@@ -148,18 +154,23 @@ class property(models.Model):
                     'name':'Company Details',
                     'view_mode':'form',
                     'target':'new',
-                    'res_id': self.company_id.id
+                    'res_id': self.company_id.id,
+                    'flags': {'mode': 'readonly'},
                     }
 
     def sorted_off(self):
         sorted_offers=self.offer_ids.search([('property_id','=',self.id)]).sorted(key=lambda p:p.price, reverse=True)
-        for sorted_o in sorted_offers:
-            return {
-                    'type':'ir.actions.act_window',
-                    'res_model':'estate.property.offer',
-                    'name':'Offer with Higest price',
-                    'view_type': 'form',
-                    'view_mode':'form',
-                    'target':'new',
-                    'domain': [('id', '=', sorted_o.id)]
-                    }
+        return {
+                'type':'ir.actions.act_window',
+                'res_model':'estate.property.offer',
+                'name':'Offer with Higest price',
+                'view_type': 'form',
+                'view_mode':'form',
+                'target':'new',
+                'res_id': sorted_offers[0].id,
+                'flags': {'mode': 'readonly'},
+                }
+
+    def total_offer(self,id):
+        offers_counts = self.offer_ids.search_count([('property_id','=',int(self.id))])
+        return offers_counts

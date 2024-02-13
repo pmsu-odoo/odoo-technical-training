@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<odoo>
+
+    <template id="controllers_properties_template">
+        <t t-call="website.layout" t-name = "controllers_properties" >
+            <t t-set="title">Properties</t>
+            <t t-out="title"/>
+            <div class="oe_structure">
+                <div class="container">
+                    <t t-foreach="properties" t-as="property">
+                        <p>
+                            <t t-esc="property.title" /><button type="button" class="offer_class" id="property" t-att-data-id="property.id">Offers</button>
+                        </p>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>
