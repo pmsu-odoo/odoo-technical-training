@@ -11,6 +11,7 @@ class property(models.Model):
     _description = "Real Estate"
     _rec_name = 'title'
     _order = "id asc"
+    # edit
 
     #models fields
     title= fields.Char('Title', required=True)
