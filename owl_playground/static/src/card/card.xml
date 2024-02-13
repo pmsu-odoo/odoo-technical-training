@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="owl_playground.card" owl="1">
+        <div class="card d-inline-block m-2 p-2" style="width: 18rem;">
+            
+            <div class = "card">
+                <h5 class="card-title">
+                    <t t-out="props.title"/>
+                </h5>
+
+                    <button class="btn btn-lg btn-primary m-2" t-on-click="minimize">Minimize</button>
+                <p class="card-text" t-if= "this.state.isopen">
+                    <span t-out="props.content"/>
+                </p>
+
+                    <!-- <p>Hidden content</p> -->
+            </div>
+
+        </div>
+    </t>
+</templates>
